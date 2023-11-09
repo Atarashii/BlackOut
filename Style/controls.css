@@ -1,0 +1,37 @@
+control {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    font-size: 18px;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 5px 5px 5px 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+control:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 5%, transparent 100%);/*rgba(0, 255, 0, 0.05);*/
+}
+
+clicker icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    border: 3px solid green;
+    border-radius: 5px 5px 5px 5px;
+    padding: 5px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    background-color: black;
+    border-radius: 50%;
+    margin: 0px 5px;
+  }
+
+  clicker icon:hover {
+    background-color: rgba(0, 255, 0, 0.05);
+  }

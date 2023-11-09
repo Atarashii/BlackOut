@@ -1,0 +1,39 @@
+:root {
+    --border-color: darkkhaki;
+    --booze: cyan;
+    --food: pink;
+    --charge: yellow;
+    --border_colour: #333;
+
+    font-family: monospace;
+}
+
+body {
+    background-color: #222;
+    color: green;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.row {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.main-container {
+    width: 800px;
+    height: 600px;
+    border: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+.hide {
+    display: none;
+}
