@@ -1,6 +1,11 @@
 export const color = {
-    red: '#F00',
-    green: '#0F0',
-    blue: '#00F',
-    lightblue: '#2242f5'
+    red: 'red',
+    green: 'green',
+    blue: 'blue',
+    lightblue: 'lightblue',
+    yellow: 'yellow',
+    orange: 'orange',
+    orangered: 'orangered',
+    purple: 'purple',
+    lightpurple: 'mediumpurple'
 }

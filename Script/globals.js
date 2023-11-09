@@ -1,2 +1,2 @@
 // Sound and volume
-export let mainVol = 0.1;
+export let mainVol = 1;

@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open main.html",
-            "file": "c:\\Users\\atara\\Desktop\\Game Dev Challenge\\main.html",
+            "file": "main.html",
             "runtimeArgs": ["--disable-web-security"]
         }
     ]

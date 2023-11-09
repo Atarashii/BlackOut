@@ -1,6 +1,8 @@
 import { addControl, clearControls as clc } from "./controls.js";
 import { clear as cls, typeNextSentence as sayMore, stateAndWait } from "./screen.js";
+import { initSound, loadSounds } from "./sounds.js";
 import { pause, togglePlayerMenuOptions } from "./utils.js";
+import { color as colorEnum } from "./enums.js";
 
 $(document).ready(function () {
     POST_Phase_1();
@@ -12,20 +14,43 @@ function POST_Phase_1() {
     clc();
 
     AddEvents();
+    initSound();
 
     addControl('Power on', 'POST', 'red');
 
     $(document).on('click','#POST', async function() {
-        $(this).remove();
-        await stateAndWait('Time to wake up...', 2500);
-        await stateAndWait('Starting system...', 4000);
+        clc();
+        await stateAndWait('Time to wake up...', 2000);
+        await stateAndWait('Starting system...', 3000);
         POST_Phase_2();
     });
 }
 
 async function POST_Phase_2() {
+    await loadSounds();
+
+    $(document).on('click','[id^="playMusic"]', async function() {
+        clc();
+        const isHappy = $(this).attr('id').indexOf('_yes') > -1;
+        await stateAndWait(isHappy ? 'Playing the good stuff...': 'Why do you hate culture?', 3000, false, isHappy ? colorEnum.lightpurple : colorEnum.red);
+        await stateAndWait(isHappy ? 'This is my favourite...': 'Do you not have a soul?', 2000, true,isHappy ? colorEnum.lightblue : colorEnum.orangered);
+        await stateAndWait(isHappy ? 'We are going to be good friends you and I...': 'Let us just get on with it...', 2000, true, isHappy ? colorEnum.green : colorEnum.orange);
+
+        if (!isHappy){
+            await stateAndWait('Fucker...', 1000, false, colorEnum.yellow);
+            await stateAndWait('Continuing...', 1000, false);
+        }
+
+        POST_Phase_3();
+    });
+}
+
+async function POST_Phase_3() {
+    await stateAndWait('Unlocking player controls...', 1000);
     togglePlayerMenuOptions();
-    pause(1000);
+    await stateAndWait('Stating the obvious...', 3000, true);
+    
+    await pause(1000);
     await stateAndWait('Welcome player...', 3000);
 }
 

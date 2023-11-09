@@ -6,6 +6,9 @@ export function getVolOffset() {
     var normal = big / 50;
 
     var volume = round((normal - 0.2), 2) + mainVol;
+    volume = volume * 100;
+    volume = Math.trunc(volume);
+    volume = volume / 100;
 
     return  volume > 1 ? 1 : (volume < 0 ? 0 : volume);
 }
