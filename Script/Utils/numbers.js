@@ -20,5 +20,5 @@ function shuffle(array) {
 
 export function getRandomIndex(size, startAt = 0) {
     let rangeIndex = range(size, startAt);
-    return shuffle(rangeIndex);
+    return shuffle(shuffle(rangeIndex));
 }

@@ -1,11 +1,18 @@
+@font-face {
+    font-family: DosMode;
+    src: url("../Assets/Fonts/MorePerfectDOSVGA.ttf");
+}
+
 :root {
     --border-color: darkkhaki;
     --booze: cyan;
     --food: pink;
     --charge: yellow;
     --border_colour: #333;
+    --accent-color: green;
 
-    font-family: monospace;
+    font-family: DosMode;
+    font-weight: 500;
 }
 
 body {
@@ -36,4 +43,11 @@ body {
 
 .hide {
     display: none;
+}
+
+[disabled], [disabled] * {
+    cursor: not-allowed;
+    opacity: 0.5;
+    --accent-color: #666 !important;
+    pointer-events: none;
 }

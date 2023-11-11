@@ -3,6 +3,7 @@ import { clear as cls, typeNextSentence as sayMore, stateAndWait } from "./scree
 import { pause, togglePlayerMenuOptions } from "./utils.js";
 import { color as colorEnum } from "./enums.js";
 import { gameAudio as ga } from "./Audio/init.js";
+import { disableMenu, enableMenu, enableinputs, disableinputs } from "./Utils/effects.js";
 
 $(document).ready(function () {
     POST_Phase_1();
@@ -102,6 +103,7 @@ async function POST_Phase_2() {
 async function POST_Phase_3() {
     await stateAndWait('Unlocking player controls...', 1000);
     togglePlayerMenuOptions();
+    enableinputs();
     await stateAndWait('Stating the obvious...', 3000, true);
     
     await pause(1000);
@@ -133,6 +135,7 @@ function toggleMenu(menu) {
     const isActive = menu.is("[active]");
 
     if (isActive) {
+        enableMenu();
         // Close the menu
         menu.removeAttr('active')
         // Resume the state
@@ -141,6 +144,7 @@ function toggleMenu(menu) {
     }
     else {
         // open the menu
+        disableMenu();
         _screenState = screen.html();
         _controlState = constrols.html();
         screen.html('');
@@ -177,15 +181,13 @@ function addMenuControls(isNewStartup) {
         _screenState = '';
         _controlState = '';
         cls();
+        disableinputs();
         toggleMenu(menu);
     });
 }
 
 // TASKS:
-// disable controls when in menu and or typing
 // decide where to save states for controls and story
 // implement the avatar direction talking and coloured text
-// sort out menu button positioning
-// ensure that when exit is clixked all clickers disappear
 // create proper modules for menu, controls, etc.
 // reafactor and make sure everything is where it should be

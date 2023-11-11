@@ -51,7 +51,8 @@
   align-items: start;
 }
 
-.story>line{
+line {
+  animation: flicker 0.01s infinite;
   color: var(--accent-color);
 }
 
@@ -71,6 +72,6 @@ line:last-child:after {
 }
 
 @keyframes blink {
-	from { opacity: 1; }
-	to { opacity: 0; }
+	50% { opacity: 1; }
+	100% { opacity: 0; }
 }

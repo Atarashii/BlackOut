@@ -2,6 +2,7 @@ import { color as colorEnum } from "./enums.js";
 import { sounds as keys } from "./Audio/sounds.js";
 import { getVolOffset, pause } from "./utils.js";
 import { addControl } from "./controls.js";
+import { disableControls, disableinputs, enableControls } from "./Utils/effects.js";
 
 var currentText = '';
 var sentences = [];
@@ -9,6 +10,8 @@ var curSentence = 0;
 var speed = 50;
 var prevChar = '';
 var play = -1;
+
+const maxheight = 300;
 
 const screen = $('.story');
 
@@ -18,14 +21,27 @@ export function clear() {
 
 function addLine(color = '') {
     const line = $(`<line${(color.length > 0 ? ` style="--accent-color: ${colorEnum[color]};"` : ` style="--accent-color: ${colorEnum.green};"`)}>> </line>`);
-    // perform check to see if we have 20 lines
-    const lines = screen.find('line');
-    const count = lines.length;
+    
+    // Fit lines in the screen area
+    let height = 0;
+    let unfit = true;
+    while(unfit) {
+        const lines = $(screen.find('line'));
+        if (lines && lines.length > 10){
+            lines.each((i, line) => {
+                height += $(line).height();
+            });
 
-    if (count > 20)
-        for (let index = 0; index < (count - 20); index++) {
-            lines[index].remove();
-        }
+            if (height >= maxheight) {
+                lines[0].remove();
+                height = 0;
+            }
+            else
+                unfit = false;
+
+        } else
+            unfit = false;
+    } 
 
     screen.append(line);
 
@@ -47,6 +63,7 @@ export async function stateAndWait(text, delay = 1000, add = false, color = '') 
     await type(false, add, color);
 
     await pause(delay);
+    enableControls();
 }
 
 export async function typeNextSentence(hasContinue = true, color = '') {
@@ -60,6 +77,7 @@ export async function typeNextSentence(hasContinue = true, color = '') {
         curSentence = 0;
         sentences = [];
     }
+    enableControls();
 }
 
 function preprocessText() {
@@ -84,6 +102,7 @@ function preprocessText() {
 }
 
 async function type(hasContinue = true, add = false, color = '') {
+    disableinputs();
     if (!add) 
         clear();
 
