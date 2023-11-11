@@ -8,6 +8,8 @@ $(document).ready(function () {
     POST_Phase_1();
 });
 
+window.BOSSKarma = 50;
+
 function POST_Phase_1() {
     togglePlayerMenuOptions();
     cls();
@@ -17,15 +19,60 @@ function POST_Phase_1() {
 
     ga.init();
 
-    addControl('Power on', 'POST', 'red');
+    addControl('Power on', 'POST', colorEnum.red);
+    addControl(' ', '', colorEnum.transparent);
+    addControl(' ', '', colorEnum.transparent);
+    addControl(' ', '', colorEnum.transparent);
 
     $(document).on('click','#POST', async function() {
         clc();
         await pause(1000);
-        await stateAndWait('Time to wake up...', 2000);
+        await stateAndWait('Time to wake up...', 1000);
+        await stateAndWait('My name is B.O.S.S. and I will be guiding you through your adventure... Like it or not... I am your BOSS...', 1000, true);
+        await POST_Phase_1_1();
+    });
+}
+
+async function POST_Phase_1_1() {
+    addControl('What is a B.O.S.S.?', 'whut_1', colorEnum.green);
+    addControl('the fuck is a B.O.S.S.?', 'whut_2', colorEnum.red);
+    addControl('What, pray tell, is a B.O.S.S. my good sir?', 'whut_3', colorEnum.lightblue);
+    addControl('B.O.S.S.?', 'whut_4', colorEnum.yellow);
+
+    $(document).on('click','[id^="whut"]', async function() {
+        clc();
+        const answer = $(this);
+        const id = Number(answer.attr('id').split('_')[1]);
+
+        switch(id) {
+            case 1: {
+                await stateAndWait('All middle sliders for you isn\'t it...', 500, true, colorEnum.green);
+                BOSSKarma++;
+                break;
+            }
+            case 2: {
+                await stateAndWait('You gotta watch your mouth, you peppy little spitfuck!', 500, true, colorEnum.red);
+                BOSSKarma -= 2;
+                break;
+            }
+            case 3: {
+                await stateAndWait('Hwhat? Hwhom? Hhow? I like your style, you can stay...', 500, true, colorEnum.lightblue);
+                BOSSKarma += 2;
+                break;
+            }
+            case 4: {
+                await stateAndWait('You being short with me? you think you can do this better don\'t you...', 500, true, colorEnum.yellow);
+                BOSSKarma--;
+                break;
+            }
+        }
+
+        await stateAndWait('What is a "B.O.S.S." you ask?', 500, true);
+        await stateAndWait('I am your Black Out Support System...', 500, true);
+        await stateAndWait('Now... can we start having some fun please?', 2000, true);
         await stateAndWait('Starting system...', 2500);
         await stateAndWait('', 500, true);
-        POST_Phase_2();
+        await POST_Phase_2();
     });
 }
 
@@ -37,7 +84,7 @@ async function POST_Phase_2() {
         clc();
         const isHappy = $(this).attr('id').indexOf('_yes') > -1;
         if (isHappy) {
-            await stateAndWait('Playing the good stuff...', 3000, false, colorEnum.lightpurple);
+            await stateAndWait('Playing the good stuff...', 3000, false, colorEnum.mediumpurple);
             await stateAndWait('This is my favourite...', 2000, true, colorEnum.lightblue);
             await stateAndWait('We are going to be good friends you and I...', 2000, true, colorEnum.green);
         } else {
@@ -105,16 +152,18 @@ function toggleMenu(menu) {
 }
 
 function addMenuControls(isNewStartup) {
-    if (isNewStartup)
-        addControl('New Game', 'new', 'green');
-    else
-        addControl('Back', 'back', 'green');
-    addControl('Save', 'save', 'green');
-    addControl('Load', 'Load', 'lightblue');
-    addControl('Exit', 'exit', 'red');
+    const menu = $('clicker[title="Menu"]');
+    if (isNewStartup) {
+        addControl('New Game', 'new', colorEnum.green);
+        addControl('  ', '', colorEnum.transparent);
+    } else {
+        addControl('Back', 'back', colorEnum.green);
+        addControl('Save', 'save', colorEnum.green);
+    }
+    addControl('Load', 'Load', colorEnum.lightblue);
+    addControl('Exit', 'exit', colorEnum.red);
 
     $(document).on('click', '#back', function () {
-        const menu = $('clicker[title="Menu"]');
         // Close the menu
         menu.removeAttr('active');
         // Resume the state
@@ -128,7 +177,7 @@ function addMenuControls(isNewStartup) {
         _screenState = '';
         _controlState = '';
         cls();
-        toggleMenu();
+        toggleMenu(menu);
     });
 }
 

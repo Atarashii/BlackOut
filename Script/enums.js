@@ -7,5 +7,6 @@ export const color = {
     orange: 'orange',
     orangered: 'orangered',
     purple: 'purple',
-    lightpurple: 'mediumpurple'
+    mediumpurple: 'mediumpurple',
+    transparent: 'transparent'
 }
