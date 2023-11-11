@@ -1,5 +1,5 @@
 import { color as colorEnum } from "./enums.js";
-import { keys } from "./sounds.js";
+import { sounds as keys } from "./Audio/sounds.js";
 import { getVolOffset, pause } from "./utils.js";
 import { addControl } from "./controls.js";
 
@@ -18,6 +18,15 @@ export function clear() {
 
 function addLine(color = '') {
     const line = $(`<line${(color.length > 0 ? ` style="--accent-color: ${colorEnum[color]};"` : ` style="--accent-color: ${colorEnum.green};"`)}>> </line>`);
+    // perform check to see if we have 20 lines
+    const lines = screen.find('line');
+    const count = lines.length;
+
+    if (count > 20)
+        for (let index = 0; index < (count - 20); index++) {
+            lines[index].remove();
+        }
+
     screen.append(line);
 
     return line;
@@ -103,18 +112,18 @@ function playTyping(curChar) {
     if (curChar === ' ') {
         play = Math.ceil(Math.random() * 2)
 
-        const sound = keys[`space${play}`];
+        const sound = keys.audio[`space${play}`];
         sound.volume = getVolOffset();
         sound.play();
     } else if (curChar === '.') {
-        const sound = keys['type1'];
+        const sound = keys.audio['type1'];
         sound.volume = getVolOffset();
         sound.play();
     } else {
         if (curChar !== prevChar)
             play = Math.ceil(Math.random() * 10);
 
-        const sound = keys[`type${play}`];
+        const sound = keys.audio[`type${play}`];
         sound.volume = getVolOffset();
         sound.play();
     }
