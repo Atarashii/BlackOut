@@ -7,9 +7,11 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open main.html",
-            "file": "main.html",
-            "runtimeArgs": ["--disable-web-security"]
+            "name": "Open index.html",
+            "file": "${workspaceFolder}/index.html",
+            "runtimeArgs": [
+                "--disable-web-security"
+            ]
         }
     ]
 }

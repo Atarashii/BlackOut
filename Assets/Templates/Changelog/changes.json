@@ -1,0 +1,246 @@
+{
+    "updates": [
+        {
+            "version_m": 0,
+            "version_s": 0,
+            "version_c": 0,
+            "changes_m": [
+                {
+                    "title": "",
+                    "description": "",
+                    "impact": ""
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "",
+                    "description": "",
+                    "impact": ""
+                }
+            ],
+            "changes_c": [
+                {
+                    "title": "",
+                    "description": "",
+                    "impact": ""
+                }
+            ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 0,
+            "version_c": 1,
+            "changes_m": [],
+            "changes_s": [],
+            "changes_c": [
+                {
+                    "title": "First update",
+                    "description": "The beginnning! created the project and started slapping bits together.",
+                    "impact": "Creating the framework to make the adventure work."
+                }
+            ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 1,
+            "version_c": 0,
+            "changes_m": [
+                {
+                    "title": "First commit",
+                    "description": "Createds the POC for the project, minimal assets and starting to get the look and feel I need",
+                    "impact": "This allows me to finally start working on the menus and controls etc."
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "Added Sounds",
+                    "description": "Recorded my actual keyboard and added rudimentary way to play sounds",
+                    "impact": "BOSS speaking to you will now be in the sound of my keys."
+                },
+                {
+                    "title": "Added Controls",
+                    "description": "Made a basic injector for controls",
+                    "impact": ""
+                },
+                {
+                    "title": "Backbone html and css added",
+                    "description": "Just making the environment less blocky and dull",
+                    "impact": "The frame that i am going to put everything else into."
+                }
+            ],
+            "changes_c": []
+        },
+        {
+            "version_m": 0,
+            "version_s": 1,
+            "version_c": 1,
+            "changes_m": [],
+            "changes_s": [],
+            "changes_c": [
+                {
+                    "title": "Small file commit",
+                    "description": "Added the README.md so GitHub would leave me alone.",
+                    "impact": ""
+                }
+            ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 1,
+            "version_c": 2,
+            "changes_m": [
+                {
+                    "title": "Added SONGS!",
+                    "description": "This is for a future update where i want to add a Theme Hospital style 'radio' to the game.",
+                    "impact": "This will force the volume controls i started building in the original framework."
+                },
+                {
+                    "title": "Large update to Screen",
+                    "description": "Massive changes to how the screen is populated and the multiple diffeerent ways of giving the player information.",
+                    "impact": "This is essentially like a debug out for the GM currently, but will become the home of dialogues etc too."
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "Async chats",
+                    "description": "I started fiddling with making things wait for other things to complete.",
+                    "impact": ""
+                }
+            ],
+            "changes_c": [
+                {
+                    "title": "Refactor",
+                    "description": "Sound was refactored to its own lieelt spot and so that it can live in peace.",
+                    "impact": ""
+                }
+            ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 1,
+            "version_c": 21,
+            "changes_m": [
+                {
+                    "title": "Refactor",
+                    "description": "Major refactoring of sound and music area.",
+                    "impact": "Enables easy invocation of objects. Sounds and music also preload and stay loaded, less chop, more clicky clacky typing!"
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "ShitTalk",
+                    "description": "I didn't know at this point, but BOSS started to get a personality.",
+                    "impact": ""
+                }
+            ],
+            "changes_c": []
+        },
+        {
+            "version_m": 0,
+            "version_s": 2,
+            "version_c": 0,
+            "changes_m": [
+                {
+                    "title": "B.O.S.S.",
+                    "description": "Introducing your GM, narrator, and all round sassy side-kick: B.O.S.S!",
+                    "impact": ""
+                },
+                {
+                    "title": "B.O.S.S. Things",
+                    "description": "BOSS will now guide you through the start of your adventure and will be quite upset if you offend him.",
+                    "impact": "This gave me the idea for a hidden mechanic for your side-kick in the game. He is, after all, your link to the world you interact with."
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "ShitTalk continued",
+                    "description": "Now that BOSS suddenly became a large mechanic in the game I needed a spot for quirky quotes. And I didn't want them to be static. And I needed something to fill the changelog with.",
+                    "impact": "Framework for reading and parsing JSON"
+                },
+                {
+                    "title": "JSON unleashed",
+                    "description": "I need a place for text and object assets. Sue me. I added a reliable way to read my JSON assets and then parse them into an object nice and neat.",
+                    "impact": ""
+                }
+            ],
+            "changes_c": [
+                {
+                    "title": "Bug",
+                    "description": "Fixed my bad code for creating controls, they can now be nice an colorful, just like YOU",
+                    "impact": ""
+                }
+            ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 2,
+            "version_c": 1,
+            "changes_m": [],
+            "changes_s": [
+                {
+                    "title": "Style",
+                    "description": "Mostly got rid of bad styles and neatened stuff up.",
+                    "impact": ""
+                }
+            ],
+            "changes_c": [
+                {
+                    "title": "Font",
+                    "description": "We are now using the exact font (maybe improved a little) that was used in DOS!",
+                    "impact": ""
+                },
+                {
+                    "title": "Control",
+                    "description": "While BOSS is talking, i don't want the player to be able to interfere... mostly... so i created a proper way to disable controls.",
+                    "impact": ""
+                }
+            ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 2,
+            "version_c": 3,
+            "changes_m": [
+                {
+                    "title": "Large update",
+                    "description": "Added a Changelog (the thing you are reading now), Icons, an element builder to make life easier and with less static HTML as string in my code.",
+                    "impact": "Check the areas below for more info."
+                },
+                {
+                    "title": "Hosted!",
+                    "description": "canabalized my site for my twitch bot to host this instead.",
+                    "impact": ""
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "Changelog",
+                    "description": "The JSON reader and a good way to use the data as objects in my code made this process much better, now there is a nice place to put all this for those who feel like reading.",
+                    "impact": ""
+                },
+                {
+                    "title": "Screen Refactor",
+                    "description": "Removed the old screen script and replaced it with a newer, more convoluted, screen script that has a proper structure for adding lines, checking screen fits, and waiting for messages to finish before making a disco of letters.",
+                    "impact": "Dialoges can now be a thing!"
+                },
+                {
+                    "title": "String extensions",
+                    "description": "I miss C# okay... HOW CAN THERE NOT BE AN EXTENTION FOR String.prototype.equalsIgnoreCase???",
+                    "impact": "Better checks makes it less likely that the iffy js checks fail me and accidentally nukes Japan again."
+                }
+            ],
+            "changes_c": [
+                {
+                    "title": "Scrollbar",
+                    "description": "I have a scrollbar now... it is styled... I hate the default scrollbar.",
+                    "impact": ""
+                },
+                {
+                    "title": "Ctrl + K + F",
+                    "description": "Went through everything and fixed formatting.",
+                    "impact": ""
+                }
+            ]
+        }
+    ]
+}

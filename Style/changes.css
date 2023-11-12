@@ -1,0 +1,87 @@
+#footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 0%;
+    min-height: 400px;
+    height: 100%;
+    max-height: 400px;
+    margin-top: 50px;
+}
+
+#footer>div {
+    display: flex;
+    flex-direction: column;
+    background-color: color-mix(in srgb, black 50%, transparent 100%);
+    border-radius: 15px;
+    height: 100%;
+    min-width: 1000px;
+    width: 1000px;
+    max-width: 1000px;
+    padding: 20px;
+}
+
+.changelog {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+update {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+batch {
+    display: flex;
+    flex-direction: column;
+}
+
+version {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+version:before {
+    content: 'Version: ';
+}
+
+significance {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 15px;
+}
+
+significance:before {
+    content: 'Change level: ';
+}
+
+changes {
+    display: flex;
+    flex-direction: column;
+}
+
+change {
+    margin-bottom: 10px;
+    margin-left: 45px;
+    text-indent: -18px;
+}
+
+change:before {
+    content: '> ';
+}
+
+change .title {
+    font-weight: bold;
+}
+
+change .impact {
+    font-size: 12px;
+    color: color-mix(in srgb, var(--accent-color) 90%, transparent 100%);
+}

@@ -1,4 +1,4 @@
-import { gameAudio as ga, handleAudioPrep as handler} from "./init.js";
+import { gameAudio as ga, handleAudioPrep as handler } from "./init.js";
 
 export const music = {
     path: './Assets/Audio/Music/##.mp3',
@@ -26,7 +26,7 @@ export const music = {
         ga.files.push(src.replace('##', index));
         sound.volume = volume;
 
-        sound.addEventListener('canplaythrough', handler() );
+        sound.addEventListener('canplaythrough', handler());
 
         return sound;
     }

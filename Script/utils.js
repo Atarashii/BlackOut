@@ -10,12 +10,12 @@ export function getVolOffset() {
     volume = Math.trunc(volume);
     volume = volume / 100;
 
-    return  volume > 1 ? 1 : (volume < 0 ? 0 : volume);
+    return volume > 1 ? 1 : (volume < 0 ? 0 : volume);
 }
 
 export function round(num, decimals) {
-        var n = Math.pow(10, decimals);
-        return Math.round( (n * num).toFixed(decimals) )  / n;
+    var n = Math.pow(10, decimals);
+    return Math.round((n * num).toFixed(decimals)) / n;
 }
 
 export function pause(s) {

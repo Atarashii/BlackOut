@@ -1,17 +1,20 @@
 import { addControl, clearControls as clc } from "./controls.js";
-import { clear as cls, typeNextSentence as sayMore, stateAndWait } from "./screen.js";
 import { pause, togglePlayerMenuOptions } from "./utils.js";
 import { color as colorEnum } from "./enums.js";
 import { gameAudio as ga } from "./Audio/init.js";
 import { disableMenu, enableMenu, enableinputs, disableinputs } from "./Utils/effects.js";
+import { clear as cls, continueSpeak, speak } from "./Display/core.js";
+import { changelog as log } from "./Changelog/core.js";
 
 $(document).ready(function () {
-    POST_Phase_1();
+    log.init();
+    POST_Phase_0();
 });
 
 window.BOSSKarma = 50;
 
-function POST_Phase_1() {
+
+async function POST_Phase_0() {
     togglePlayerMenuOptions();
     cls();
     clc();
@@ -19,17 +22,20 @@ function POST_Phase_1() {
     AddEvents();
 
     ga.init();
+    await POST_Phase_1();
+}
 
+async function POST_Phase_1() {
     addControl('Power on', 'POST', colorEnum.red);
     addControl(' ', '', colorEnum.transparent);
     addControl(' ', '', colorEnum.transparent);
     addControl(' ', '', colorEnum.transparent);
 
-    $(document).on('click','#POST', async function() {
+    $(document).on('click', '#POST', async function () {
         clc();
         await pause(1000);
-        await stateAndWait('Time to wake up...', 1000);
-        await stateAndWait('My name is B.O.S.S. and I will be guiding you through your adventure... Like it or not... I am your BOSS...', 1000, true);
+        await speak('Time to wake up...', 1000);
+        await speak('My name is B.O.S.S. and I will be guiding you through your adventure... Like it or not... I am your BOSS...', 1000, true);
         await POST_Phase_1_1();
     });
 }
@@ -40,40 +46,40 @@ async function POST_Phase_1_1() {
     addControl('What, pray tell, is a B.O.S.S. my good sir?', 'whut_3', colorEnum.lightblue);
     addControl('B.O.S.S.?', 'whut_4', colorEnum.yellow);
 
-    $(document).on('click','[id^="whut"]', async function() {
+    $(document).on('click', '[id^="whut"]', async function () {
         clc();
         const answer = $(this);
         const id = Number(answer.attr('id').split('_')[1]);
 
-        switch(id) {
+        switch (id) {
             case 1: {
-                await stateAndWait('All middle sliders for you isn\'t it...', 500, true, colorEnum.green);
+                await speak('All middle sliders for you isn\'t it...', 500, true, colorEnum.green);
                 BOSSKarma++;
                 break;
             }
             case 2: {
-                await stateAndWait('You gotta watch your mouth, you peppy little spitfuck!', 500, true, colorEnum.red);
+                await speak('You gotta watch your mouth, you peppy little spitfuck!', 500, true, colorEnum.red);
                 BOSSKarma -= 2;
                 break;
             }
             case 3: {
-                await stateAndWait('Hwhat? Hwhom? Hhow? I like your style, you can stay...', 500, true, colorEnum.lightblue);
+                await speak('Hwhat? Hwhom? Hhow? I like your style, you can stay...', 500, true, colorEnum.lightblue);
                 BOSSKarma += 2;
                 break;
             }
             case 4: {
-                await stateAndWait('You being short with me? you think you can do this better don\'t you...', 500, true, colorEnum.yellow);
+                await speak('You being short with me? you think you can do this better don\'t you...', 500, true, colorEnum.yellow);
                 BOSSKarma--;
                 break;
             }
         }
 
-        await stateAndWait('What is a "B.O.S.S." you ask?', 500, true);
-        await stateAndWait('I am your Black Out Support System...', 500, true);
-        await stateAndWait('Now... can we start having some fun please?', 2000, true);
-        await stateAndWait('Starting system...', 2500);
-        await stateAndWait('', 500, true);
-        await POST_Phase_2();
+        await speak('What is a "B.O.S.S." you ask?', 500, true);
+        await speak('I am your Black Out Support System...', 500, true);
+        await speak('Now... can we start having some fun please?', 2000, true);
+        await speak('Starting system...', 2500);
+        await speak('', 500, true);
+        POST_Phase_2();
     });
 }
 
@@ -81,19 +87,19 @@ async function POST_Phase_2() {
     await ga.loadSounds();
     await ga.loadMusic();
 
-    $(document).on('click','[id^="playMusic"]', async function() {
+    $(document).on('click', '[id^="playMusic"]', async function () {
         clc();
         const isHappy = $(this).attr('id').indexOf('_yes') > -1;
         if (isHappy) {
-            await stateAndWait('Playing the good stuff...', 3000, false, colorEnum.mediumpurple);
-            await stateAndWait('This is my favourite...', 2000, true, colorEnum.lightblue);
-            await stateAndWait('We are going to be good friends you and I...', 2000, true, colorEnum.green);
+            await speak('Playing the good stuff...', 3000, false, colorEnum.mediumpurple);
+            await speak('This is my favourite...', 2000, true, colorEnum.lightblue);
+            await speak('We are going to be good friends you and I...', 2000, true, colorEnum.green);
         } else {
-            await stateAndWait('Why do you hate culture?', 3000, false, colorEnum.red);
-            await stateAndWait('Do you not have a soul?', 2000, true, colorEnum.orangered);
-            await stateAndWait('Let us just get on with it...', 2000, true, colorEnum.orange);
-            await stateAndWait('Fucker...', 1000, false, colorEnum.yellow);
-            await stateAndWait('Continuing...', 1000, false);
+            await speak('Why do you hate culture?', 3000, false, colorEnum.red);
+            await speak('Do you not have a soul?', 2000, true, colorEnum.orangered);
+            await speak('Let us just get on with it...', 2000, true, colorEnum.orange);
+            await speak('Fucker...', 1000, false, colorEnum.yellow);
+            await speak('Continuing...', 1000, false);
         }
 
         POST_Phase_3();
@@ -101,13 +107,13 @@ async function POST_Phase_2() {
 }
 
 async function POST_Phase_3() {
-    await stateAndWait('Unlocking player controls...', 1000);
+    await speak('Unlocking player controls...', 1000);
     togglePlayerMenuOptions();
     enableinputs();
-    await stateAndWait('Stating the obvious...', 3000, true);
-    
+    await speak('Stating the obvious...', 3000, true);
+
     await pause(1000);
-    await stateAndWait('Welcome player...', 3000);
+    await speak('Welcome player...', 3000);
     addMenuControls(true);
 }
 
@@ -120,7 +126,7 @@ function AddEvents() {
 
     $(document).on('click', '#continue', function () {
         clc();
-        sayMore();
+        continueSpeak();
     });
 
     $(document).on('click', 'clicker[title="Menu"]', function () {
@@ -128,7 +134,7 @@ function AddEvents() {
         toggleMenu(menu);
     });
 
-    
+
 }
 
 function toggleMenu(menu) {
@@ -177,17 +183,17 @@ function addMenuControls(isNewStartup) {
 
     $(document).on('click', '#exit', async function () {
         clc();
-        await stateAndWait('Why would you do this to me?', 2500);
+        await speak('Why would you do this to me?', 2500);
         _screenState = '';
         _controlState = '';
-        cls();
         disableinputs();
-        toggleMenu(menu);
+        cls();
+        clc();
+        location.reload();
     });
 }
 
 // TASKS:
 // decide where to save states for controls and story
 // implement the avatar direction talking and coloured text
-// create proper modules for menu, controls, etc.
-// reafactor and make sure everything is where it should be
+// Start adding minification
