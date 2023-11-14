@@ -1,0 +1,28 @@
+{
+    "Scenes": [
+        {
+            "Id": 0,
+            "Text": "You awaken, drooling, on a bar counter. The bartend softly shaking you by the shoulder...",
+            "Actions": [],
+            "Controls": [
+                0
+            ]
+        },
+        {
+            "Id": 1,
+            "Text": "You stare dumbfoundedly at the lady sitting alone next to you. Unable to read her expression you'll have to resort to your charisma to navigate this situation.",
+            "Actions": [],
+            "Controls": [
+                2
+            ]
+        },
+        {
+            "Id": 2,
+            "Text": "You are stopped by a cop on your way home. This is your time of judgement.",
+            "Actions": [],
+            "Controls": [
+                3
+            ]
+        }
+    ]
+}

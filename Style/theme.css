@@ -21,8 +21,10 @@ body {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+    height: calc(100vh - 55px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 .row {
@@ -45,8 +47,10 @@ body {
     border-radius: 15px;
 }
 
-.hide {
-    display: none;
+.hide,
+.hide * {
+    opacity: 0 !important;
+    pointer-events: none;
 }
 
 [disabled],

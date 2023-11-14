@@ -241,6 +241,36 @@
                     "impact": ""
                 }
             ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 3,
+            "version_c": 0,
+            "changes_m": [
+                {
+                    "title": "First Encounters",
+                    "description": "BIG update! you can now have an encounter! with a Barman! i know i know, not really that badass but go check the GitHub page if you really want to see how much this change required.",
+                    "impact": "plugging in encounters, scenes and dialogs etc will now populate properly. people can have dialogs. NPCs are starting to take form. Basically the main gameplay loop engine, and it's ALL MINE!"
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "Flow",
+                    "description": "Added the ability to \"Wake\" instead of power on which will skip a bunch of setting creation. This will become something that is unlockable once you have a save slot created.",
+                    "impact": "Faster start times, still loading assets, so still takes time, but not that much anymore."
+                },
+                {
+                    "title": "Control",
+                    "description": "made it easier to add controls and handlers. this was the core of being able to navigate scenes.",
+                    "impact": "opens up the posibilities to create other interactables in the same way like pocket items etc in future."
+                }
+            ],
+            "changes_c": [
+            {
+                "title": "Styling",
+                "description": "A bit of a spit-shine on some of the ui stuff, added socials, spaced stuff a bit more etc.",
+                "impact": "Click a social... i dare you"
+            }]
         }
     ]
 }

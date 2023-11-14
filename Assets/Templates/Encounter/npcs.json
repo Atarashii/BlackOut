@@ -1,0 +1,16 @@
+{
+    "Characters": [
+        {
+            "Id": 0,
+            "Avatar": "",
+            "Name": "MissingNo",
+            "Color": "green"
+        },
+        {
+            "Id": 1,
+            "Avatar": "",
+            "Name": "Barman",
+            "Color": "lightblue"
+        }
+    ]
+}

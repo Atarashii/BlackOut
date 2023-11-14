@@ -1,0 +1,23 @@
+{
+    "Dialogs": [
+        {
+            "Id": 0,
+            "Dialog": [
+                {
+                    "Character": 0,
+                    "Text": "CHEATER CHEATER CHEATER CHEATER CHEATER",
+                    "Actions": [],
+                    "Controls": []
+                },
+                {
+                    "Character": 1,
+                    "Text": "Hey, you okay there?",
+                    "Actions": [],
+                    "Controls": [
+                        1
+                    ]
+                }
+            ]
+        }
+    ]
+}

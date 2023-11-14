@@ -1,0 +1,17 @@
+{
+    "Encounters": [
+        {
+            "Id": 0,
+            "Scene": 0,
+            "Dialog": 0
+        },
+        {
+            "Id": 1,
+            "Scene": 1
+        },
+        {
+            "Id": 2,
+            "Scene": 2
+        }
+    ]
+}

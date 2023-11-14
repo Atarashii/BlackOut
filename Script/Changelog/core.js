@@ -10,8 +10,8 @@ export const changelog = {
 
         log.html('');
 
-        const updates = result.updates;
-        const lastUpdate = updates.slice(-1)[0];
+        const updates = result.updates.reverse();
+        const lastUpdate = updates[0];
         
         $('#gameversion').text(`v ${lastUpdate.version_m}.${lastUpdate.version_s}.${lastUpdate.version_c}`);
 

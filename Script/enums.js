@@ -10,3 +10,9 @@ export const color = {
     mediumpurple: 'mediumpurple',
     transparent: 'transparent'
 }
+
+export const frames = {
+    Encounter: 'Encounter',
+    Scene: 'Scene',
+    Dialog: 'Dialog'
+}

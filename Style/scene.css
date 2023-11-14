@@ -54,6 +54,8 @@
 line {
   animation: flicker 0.01s infinite;
   color: var(--accent-color);
+  margin-left: 18px;
+  text-indent: -18px;
 }
 
 line:before {
