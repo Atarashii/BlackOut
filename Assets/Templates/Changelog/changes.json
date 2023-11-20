@@ -266,11 +266,55 @@
                 }
             ],
             "changes_c": [
-            {
-                "title": "Styling",
-                "description": "A bit of a spit-shine on some of the ui stuff, added socials, spaced stuff a bit more etc.",
-                "impact": "Click a social... i dare you"
-            }]
+                {
+                    "title": "Styling",
+                    "description": "A bit of a spit-shine on some of the ui stuff, added socials, spaced stuff a bit more etc.",
+                    "impact": "Click a social... i dare you"
+                }
+            ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 3,
+            "version_c": 232,
+            "changes_m": [
+                {
+                    "title": "Tech upgrade",
+                    "description": "This is boring update, but a big one. I hit the wall in terms of being able to make reliable changes to the large spread of JS. Methods with parameters being changed wouldn't give errors etc. and massive time sinks with having to run up everything every time i wanted to test small changes. NO MORE! moved to typescript and away from modules. This was my choice, others may go for other solutions, but this is my comfort spot. While i was at it i also updated the styling to SCSS and the code and styles are now compiled and transpiled to single files. WHOOP.",
+                    "impact": "Life will be easier, and changes and updates will go out faster and with less issues."
+                },
+                {
+                    "title": "Infrastructure",
+                    "description": "Save slots are now a thing... Sortof. Next up? Actual save states haha.",
+                    "impact": "more pretty things to look at and click on"
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "Save slots",
+                    "description": "The save slot will be named by BOSS giving you options. There will be 3 slots so you can enjoy the future multiplicity of playthroughs.",
+                    "impact": "Getting ready for save states and progression."
+                },
+                {
+                    "title": "Naming you, Naming me",
+                    "description": "BOSS will try to name you. There are some special options with some special responses, keep an eye out for them ;)"
+                },
+                {
+                    "title": "Demo ending",
+                    "description": "Some flavour for the end of the current demo state."
+                }
+            ],
+            "changes_c": [
+                {
+                    "title": "Fixed controls",
+                    "description": "Since this is a single page application, i was busy creating overlaping event handlers and also some that were just piling up on the page memory. I fixed that.",
+                    "impact": "Game stays responsive even when it has run for a long time."
+                },
+                {
+                    "title": "Fixed mobile layout",
+                    "description": "Yeah this should look better on your phone now."
+                }
+            ]
         }
     ]
 }

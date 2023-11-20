@@ -1,0 +1,25 @@
+chatline {
+    animation: flicker 0.01s infinite;
+    color: var(--accent-color);
+    margin-left: 18px;
+    text-indent: -18px;
+
+    &:before {
+        content: '> ';
+    }
+
+    &:last-child:after {
+        content: '|';
+    }
+
+    &::first-letter {
+        color: green !important;
+    }
+
+    &:last-child:after {
+        animation-name: blink;
+        animation-duration: 600ms;
+        animation-iteration-count: infinite;
+        opacity: 1;
+    }
+}

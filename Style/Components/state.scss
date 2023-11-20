@@ -1,0 +1,45 @@
+state {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    saveslot {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        border: 3px solid var(--accent-color);
+        height: calc(100% - 10px);
+        width: 30%;
+        border-radius: 10px;
+        color: var(--accent-color);
+        cursor: pointer;
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--accent-color) 5%, transparent 100%);
+        }
+
+        &>div {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            span:first-child {
+                font-weight: bold;
+                font-size: 18px;
+            }
+        }
+
+        &.exists.clicked {
+            --accent-color: orangered;
+        }
+
+        &.clicked {
+            --accent-color: mediumpurple;
+        }
+    }
+}
