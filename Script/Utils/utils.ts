@@ -29,4 +29,8 @@ namespace game {
                 $(clicker).toggleClass('hide');
         });
     }
+
+    export function getLocalDate() {
+        return new Intl.DateTimeFormat(navigator.language, {dateStyle: 'short', timeStyle: 'short'}).format(new Date());
+    }
 }

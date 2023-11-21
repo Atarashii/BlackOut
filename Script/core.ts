@@ -1,5 +1,5 @@
 namespace game.core {
-    export let BOSSKarma = 50;
+    export let BOSSKarma = 0;
     export let IsFirstRun = true;
     export let IsWake = false;
 

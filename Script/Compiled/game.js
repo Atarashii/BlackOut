@@ -233,6 +233,10 @@ var game;
         });
     }
     game.togglePlayerMenuOptions = togglePlayerMenuOptions;
+    function getLocalDate() {
+        return new Intl.DateTimeFormat(navigator.language, { dateStyle: 'short', timeStyle: 'short' }).format(new Date());
+    }
+    game.getLocalDate = getLocalDate;
 })(game || (game = {}));
 var game;
 (function (game) {
@@ -755,7 +759,6 @@ var game;
                 game.global.container.avatarRight().text('');
                 game.control.clear();
                 yield game.display.speak('Pick a slot, any slot!');
-                game.slots.Created = new Date();
                 game.slots.populate();
             });
         }
@@ -1045,6 +1048,15 @@ var game;
                     player.Name = name.Real;
                 else
                     player.Name = name.Name;
+                const newState = [];
+                game.state.Current.Slots.forEach(slot => {
+                    if (slot.Id == game.slots.Id) {
+                        slot.LastUpdated = game.getLocalDate();
+                        slot.Name = player.Name;
+                    }
+                    newState.push(slot);
+                });
+                game.state.updateState(newState);
                 yield game.display.speak('Finally we can get into this!', 1000);
                 yield game.loop.start();
             });
@@ -1058,6 +1070,7 @@ var game;
         let slotStates = {};
         slots.Id = -1;
         function populate() {
+            game.state.init();
             drawSlots();
         }
         slots.populate = populate;
@@ -1067,30 +1080,45 @@ var game;
                 const stateContainer = game.builder.primitive('state');
                 game.global.container.controls().append(stateContainer);
                 for (let index = 0; index < 3; index++) {
+                    const slot = game.state.Current.Slots[index];
                     const classes = `zoom`;
-                    const slotContainer = game.builder.primitive('saveslot', `slotId_${index + 1}`, classes);
-                    const slotHead = game.builder.primitive('div', '', '', '', undefined, `<span>Slot ${index + 1}</span>`);
+                    const slotContainer = game.builder.primitive('saveslot', `slotId_${slot.Id}`, classes);
+                    const slotHead = game.builder.primitive('div', '', '', '', undefined, `<span>Slot ${slot.Id}</span>`);
                     const slotName = game.builder.primitive('div');
-                    const name = game.builder.primitive('span', `slotName_${index}`);
+                    const name = game.builder.primitive('span', `slotName_${slot.Id}`, '', undefined, undefined, '', slot.Name);
                     slotName.append(name);
                     const slotLast = game.builder.primitive('div', '', '', '', undefined, '<span>Last Played</span>');
-                    const last = game.builder.primitive('span', `slotLast_${index}`);
+                    const last = game.builder.primitive('span', `slotLast_${slot.Id}`);
+                    const lastVal = game.builder.primitive('span', '', '', undefined, undefined, '', slot.LastUpdated);
                     slotLast.append(last);
+                    slotLast.append(lastVal);
                     const slotTime = game.builder.primitive('div', '', '', '', undefined, '<span>Time Played</span>');
-                    const time = game.builder.primitive('span', `slotTime_${index}`);
+                    const time = game.builder.primitive('span', `slotTime_${slot.Id}`);
+                    const timeVal = game.builder.primitive('span', '', '', undefined, undefined, '', slot.TimePlayed);
                     slotTime.append(time);
+                    slotTime.append(timeVal);
                     slotContainer.append(slotHead).append(slotName).append(slotLast).append(slotTime);
                     stateContainer.append(slotContainer);
                     yield game.pause(300);
                 }
-                $(document).on('click', 'saveslot', function () {
+                $(document).one('click', 'saveslot', function () {
                     return __awaiter(this, void 0, void 0, function* () {
                         const selected = $(this);
                         slots.Id = Number(selected.attr('id').split('_')[1]);
+                        game.state.saveState();
                         yield game.player.getName();
                     });
                 });
             });
+        }
+        function getTimePlayed(created, updated) {
+            const diff = new Date(updated).getTime() - new Date(created).getTime();
+            let seconds = diff / (1000);
+            let minutes = Math.trunc(seconds / 60);
+            seconds = Math.trunc(seconds - (minutes * 60));
+            const hours = Math.trunc(minutes / 60);
+            minutes = Math.trunc(minutes - (hours * 60));
+            return `${hours}h ${minutes}m ${seconds}s`;
         }
     })(slots = game.slots || (game.slots = {}));
 })(game || (game = {}));
@@ -1098,7 +1126,7 @@ var game;
 (function (game) {
     var core;
     (function (core) {
-        core.BOSSKarma = 50;
+        core.BOSSKarma = 0;
         core.IsFirstRun = true;
         core.IsWake = false;
         $(document).ready(function () {
@@ -1369,5 +1397,96 @@ var game;
             container.avatarRight = avatarRight;
         })(container = global.container || (global.container = {}));
     })(global = game.global || (game.global = {}));
+})(game || (game = {}));
+var game;
+(function (game) {
+    var storage;
+    (function (storage) {
+        var local;
+        (function (local) {
+            local.version = $('#gameversion').text();
+            function set(key, value) {
+                localStorage.setItem(getKey(key), JSON.stringify(value));
+            }
+            local.set = set;
+            function get(key) {
+                const item = localStorage.getItem(getKey(key));
+                if (item)
+                    return JSON.parse(item);
+                return undefined;
+            }
+            local.get = get;
+            function del(key) {
+                localStorage.removeItem(getKey(key));
+            }
+            local.del = del;
+            function getKey(key) {
+                const version = $('#gameversion').text();
+                return `${version.replace('.', '_')}-${key}`;
+            }
+        })(local = storage.local || (storage.local = {}));
+    })(storage = game.storage || (game.storage = {}));
+})(game || (game = {}));
+var game;
+(function (game) {
+    var state;
+    (function (state_1) {
+        function init() {
+            const state = game.storage.local.get('state');
+            state_1.Current = state ? state : new game.GameState();
+        }
+        state_1.init = init;
+        function saveState() {
+            var _a;
+            const state = game.storage.local.get('state');
+            const newState = [];
+            for (let index = 1; index <= 3; index++) {
+                let slot = (_a = state === null || state === void 0 ? void 0 : state.Slots.filter(s => s.Id == index)[0]) !== null && _a !== void 0 ? _a : new game.SaveSlot(index);
+                if (slot.Id == game.slots.Id) {
+                    slot.Created = slot.Created.hasValue() ? slot.Created : game.getLocalDate();
+                    slot.LastUpdated = game.getLocalDate();
+                    slot.Name = game.player.Name;
+                    slot.BossKarma = slot.BossKarma === 50 ? slot.BossKarma + game.core.BOSSKarma : slot.BossKarma;
+                }
+                newState.push(slot);
+            }
+            state_1.Current = new game.GameState(newState);
+            game.storage.local.set('state', state_1.Current);
+        }
+        state_1.saveState = saveState;
+        function updateState(gameSlots) {
+            state_1.Current = new game.GameState(gameSlots);
+            game.storage.local.set('state', state_1.Current);
+        }
+        state_1.updateState = updateState;
+        function clearState() {
+            game.storage.local.del('state');
+        }
+        state_1.clearState = clearState;
+    })(state = game.state || (game.state = {}));
+})(game || (game = {}));
+(function (game) {
+    class GameState {
+        constructor(slots = []) {
+            this.Slots = [];
+            for (let index = 0; index < 3; index++) {
+                this.Slots.push(slots[index] ? slots[index] : new SaveSlot(index + 1));
+            }
+        }
+    }
+    game.GameState = GameState;
+    class SaveSlot {
+        constructor(id) {
+            this.Name = '';
+            this.Created = '';
+            this.LastUpdated = '';
+            this.BossKarma = 50;
+            this.TimePlayed = 'coming soon';
+            this.PlayStart = '';
+            this.PlayEnd = '';
+            this.Id = id;
+        }
+    }
+    game.SaveSlot = SaveSlot;
 })(game || (game = {}));
 //# sourceMappingURL=game.js.map

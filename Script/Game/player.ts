@@ -82,6 +82,18 @@ namespace game.player {
         else
             Name = name.Name;
 
+        const newState: Array<SaveSlot> = [];
+        state.Current.Slots.forEach(slot => {
+            if (slot.Id == slots.Id) {
+                slot.LastUpdated = getLocalDate();
+                slot.Name = player.Name;
+            }
+
+            newState.push(slot);
+        });
+
+        state.updateState(newState);
+
         await display.speak('Finally we can get into this!', 1000);
         await loop.start();
     }

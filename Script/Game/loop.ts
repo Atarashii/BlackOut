@@ -38,7 +38,6 @@ namespace game.loop {
         await display.speak('Pick a slot, any slot!');
 
         // Get slot ready
-        slots.Created = new Date();
         slots.populate();
     }
 

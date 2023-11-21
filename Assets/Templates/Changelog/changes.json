@@ -315,6 +315,24 @@
                     "description": "Yeah this should look better on your phone now."
                 }
             ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 3,
+            "version_c": 234,
+            "changes_m": [],
+            "changes_s": [],
+            "changes_c": [
+                {
+                    "title": "Fixed slots",
+                    "description": "Local storage baby! I can SAVE a slot... and even update it... we'll get to the loading bits later haha",
+                    "impact": "time to figure out how we are going to load the entire state the game was in and remember where you were and what you were doing... kinda like the main character"
+                },
+                {
+                    "title": "Lied about fixing mobile layout",
+                    "description": "i'm sorry... it even looks like crap on smaller screens... GET BETTER SCREENS YOU PEASANTS!"
+                }
+            ]
         }
     ]
 }

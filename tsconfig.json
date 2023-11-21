@@ -50,6 +50,11 @@
         // Core
         "Script/core.ts",
         "Script/enums.ts",
-        "Script/globals.ts"
+        "Script/globals.ts",
+
+        // Storage
+        "Script/Storage/local.ts",
+        "Script/Storage/state.ts"
+
     ]
 }
