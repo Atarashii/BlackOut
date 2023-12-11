@@ -4,14 +4,14 @@
             "Id": 0,
             "Dialog": [
                 {
-                    "Character": 0,
-                    "Text": "CHEATER CHEATER CHEATER CHEATER CHEATER",
+                    "Character": 1,
+                    "Text": "Hey, you okay there?",
                     "Actions": [],
-                    "Controls": []
+                    "Controls": [ -99 ]
                 },
                 {
                     "Character": 1,
-                    "Text": "Hey, you okay there?",
+                    "Text": "You passed out there for a moment...",
                     "Actions": [],
                     "Controls": [
                         1

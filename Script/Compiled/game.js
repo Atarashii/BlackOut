@@ -153,6 +153,16 @@ var game;
     String.prototype.euqalsIgnoreCase = function euqalsInvariant(text) {
         return this.toLocaleLowerCase() === text.toLocaleLowerCase();
     };
+    String.prototype.replaceAll = function replaceAll(text, replace) {
+        let current = this;
+        let notFinished = true;
+        while (notFinished) {
+            current = current.replace(text, replace);
+            if (!current.includes(text))
+                notFinished = false;
+        }
+        return current;
+    };
 })(game || (game = {}));
 var game;
 (function (game) {
@@ -253,6 +263,8 @@ var game;
                 audio.music.init();
                 SmallTalk = (yield game.utils.jsonfile.getData(SmallTalkPath));
                 RandomizedIndex = game.utils.number.getRandomIndex(SmallTalk.Lines.length);
+                const volumeKnob = $('knob img');
+                audio.music.Volume = new game.Knob(volumeKnob, -151, 147);
             });
         }
         audio.init = init;
@@ -287,6 +299,8 @@ var game;
                     yield game.display.speak(smallTalk(), 500, true);
                     yield game.display.speak('', 500, true);
                 }
+                $('knob').removeAttr('disabled');
+                $('switch').removeAttr('disabled');
                 yield game.display.speak('Music files initializing...', 1000, true);
                 let unfinished = true;
                 while (unfinished) {
@@ -358,11 +372,15 @@ var game;
 var game;
 (function (game) {
     var audio;
-    (function (audio) {
+    (function (audio_1) {
         var music;
         (function (music) {
             music.Paths = [];
             music.Tracks = [];
+            music.IsRandom = false;
+            const PlayList = [];
+            const RandomList = [];
+            let CurrentSong = -1;
             const GameMusicPath = './Assets/Audio/Music';
             const Filenames = [
                 'song1',
@@ -376,16 +394,72 @@ var game;
                     music.Paths.push(`${GameMusicPath}/${file}.mp3`);
                     game.audio.AudioTotal++;
                 });
+                let listNum = 0;
                 music.Paths.forEach(path => {
-                    music.Tracks.push(new game.GameAudio(path));
+                    music.Tracks.push(new game.GameAudio(path, 0.1));
+                    PlayList.push(listNum);
+                    listNum++;
                 });
+                game.utils.number.getRandomIndex(PlayList.length).forEach(n => {
+                    RandomList.push(n);
+                });
+                CurrentSong = 0;
             }
             music.init = init;
             function total() {
                 return music.Tracks.length;
             }
             music.total = total;
-        })(music = audio.music || (audio.music = {}));
+            function skip() {
+                music.CurrentTrack.pause();
+                music.CurrentTrack.currentTime = 0;
+                CurrentSong++;
+                if (CurrentSong === total()) {
+                    CurrentSong = 0;
+                }
+                playSong();
+            }
+            music.skip = skip;
+            function playSong() {
+                const audio = music.Tracks[music.IsRandom ? RandomList[CurrentSong] : PlayList[CurrentSong]];
+                music.CurrentTrack = audio.Element;
+                music.CurrentTrack.volume = music.Volume.getValue();
+                music.CurrentTrack.play();
+                $('switch[value="play"]').removeClass('active');
+                $('switch[value="play"]').addClass('active');
+                const marquee = $('BOSSAmp marquee');
+                const timePlayed = $('#track_time');
+                const timeTotal = $('#track_total');
+                timeTotal.text(getDuration(music.CurrentTrack.duration));
+                marquee.text(audio.Name);
+                $(music.CurrentTrack).one('ended', () => {
+                    music.CurrentTrack.pause();
+                    music.CurrentTrack.currentTime = 0;
+                    CurrentSong++;
+                    if (CurrentSong === total()) {
+                        CurrentSong = 0;
+                        game.utils.number.getRandomIndex(PlayList.length).forEach((n, i) => {
+                            RandomList[i] = n;
+                        });
+                    }
+                    playSong();
+                });
+                $(music.CurrentTrack).on('timeupdate', function () {
+                    timePlayed.text(getDuration(music.CurrentTrack.currentTime));
+                });
+            }
+            music.playSong = playSong;
+            function isPlaying() {
+                return music.CurrentTrack && music.CurrentTrack.duration > 0 && !music.CurrentTrack.paused;
+            }
+            music.isPlaying = isPlaying;
+            function getDuration(seconds) {
+                let sec = Math.trunc(seconds);
+                let min = Math.trunc(sec / 60);
+                sec = sec - (min * 60);
+                return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+            }
+        })(music = audio_1.music || (audio_1.music = {}));
     })(audio = game.audio || (game.audio = {}));
 })(game || (game = {}));
 var game;
@@ -396,8 +470,10 @@ var game;
         (function (sounds) {
             sounds.Paths = [];
             sounds.Tracks = [];
-            const GameSoundsPath = './Assets/Audio/Typing';
-            const Filenames = [
+            const GameSoundsPathType = './Assets/Audio/Typing';
+            const GameSoundsPathKnob = './Assets/Audio/Knob';
+            const GameSoundsPathClick = './Assets/Audio/Clicks';
+            const FilenamesType = [
                 'space1',
                 'space2',
                 'type1',
@@ -411,9 +487,24 @@ var game;
                 'type9',
                 'type10'
             ];
+            const FilenamesKnob = [
+                'tick'
+            ];
+            const FilenamesClick = [
+                'click-off',
+                'click-on',
+            ];
             function init() {
-                Filenames.forEach(file => {
-                    sounds.Paths.push(`${GameSoundsPath}/${file}.mp3`);
+                FilenamesType.forEach(file => {
+                    sounds.Paths.push(`${GameSoundsPathType}/${file}.mp3`);
+                    game.audio.AudioTotal++;
+                });
+                FilenamesKnob.forEach(file => {
+                    sounds.Paths.push(`${GameSoundsPathKnob}/${file}.mp3`);
+                    game.audio.AudioTotal++;
+                });
+                FilenamesClick.forEach(file => {
+                    sounds.Paths.push(`${GameSoundsPathClick}/${file}.mp3`);
                     game.audio.AudioTotal++;
                 });
                 sounds.Paths.forEach(path => {
@@ -443,7 +534,9 @@ var game;
                 container.html('');
                 const updates = result.updates.reverse();
                 const latest = updates[0];
-                $('#gameversion').text(`v ${latest.version_m}.${latest.version_s}.${latest.version_c}`);
+                const version = `v ${latest.version_m}.${latest.version_s}.${latest.version_c}`;
+                $('#gameversion').text(version);
+                game.core.Version = version;
                 updates.forEach(update => {
                     if (update.version_m === 0 && update.version_s === 0 && update.version_c === 0)
                         return;
@@ -720,6 +813,59 @@ var game;
         }
     }
     game.GameControls = GameControls;
+    class Knob {
+        constructor(knob, min, max, val = 0) {
+            this.Element = knob;
+            this.MinDegrees = min;
+            this.MaxDegrees = max;
+            this.Value = val;
+            const volKnob = this.Element;
+            volKnob.on('mouseover mouseout', function (event) {
+                event.preventDefault();
+                if (event.type === 'mouseover') {
+                    volKnob.on('wheel', handleWheel);
+                }
+                else {
+                    volKnob.off('wheel', handleWheel);
+                }
+            });
+        }
+        getValue() {
+            return this.Value / 100;
+        }
+        setValue(val) {
+            setVolKnob(val * 2);
+            const sound = game.audio.sounds.get(`tick`);
+            sound.volume = game.audio.music.Volume.getValue() + 0.2;
+            sound.play();
+            if (game.audio.music.CurrentTrack)
+                game.audio.music.CurrentTrack.volume = game.audio.music.Volume.getValue();
+        }
+    }
+    game.Knob = Knob;
+    function handleWheel(event) {
+        const wheelevent = event;
+        const wheel = wheelevent.originalEvent;
+        const deltaY = wheel.deltaY;
+        const sound = game.audio.sounds.get(`tick`);
+        sound.volume = game.audio.music.Volume.getValue() + 0.2;
+        if (deltaY > 0) {
+            if (game.audio.music.Volume.Value > 0)
+                game.audio.music.Volume.setValue((game.audio.music.Volume.Value / 2) - 1);
+            sound.play();
+        }
+        else {
+            if (game.audio.music.Volume.Value < 20)
+                game.audio.music.Volume.setValue((game.audio.music.Volume.Value / 2) + 1);
+            sound.play();
+        }
+    }
+    function setVolKnob(val) {
+        const range = game.audio.music.Volume.MaxDegrees - game.audio.music.Volume.MinDegrees;
+        game.audio.music.Volume.Value = val;
+        const degrees = game.audio.music.Volume.MinDegrees + Math.trunc(range * val / 20);
+        game.audio.music.Volume.Element.css('transform', `rotate(${degrees}deg)`);
+    }
 })(game || (game = {}));
 var game;
 (function (game) {
@@ -859,7 +1005,7 @@ var game;
                         const control = $(event.currentTarget);
                         gamecontrols.clear();
                         let data = Controls.filter((o, i, a) => o.Id === Number(control.attr('value')))[0];
-                        if (data && data.Effect && data.Effect.hasOwnProperty('Dialog') && data.Effect.Dialog) {
+                        if (data && data.Effect && data.Effect.hasOwnProperty('Dialog') && typeof data.Effect.Dialog === 'number') {
                             if (CurrentDialog && CurrentDialog.Dialog.length > data.Effect.Dialog) {
                                 DialogIndex = data.Effect.Dialog;
                                 NextFrame = game.frame.Dialog;
@@ -916,10 +1062,17 @@ var game;
                         gamecontrols.clear();
                         let data = Controls.filter((o, i, a) => o.Id === Number(control.attr('value')))[0];
                         if (data && data.Effect && data.Effect.hasOwnProperty('Dialog') && data.Effect.Dialog) {
-                            if (CurrentDialog && CurrentDialog.Dialog.length > data.Effect.Dialog) {
-                                DialogIndex = data.Effect.Dialog;
-                                NextFrame = game.frame.Dialog;
-                                yield getFrame();
+                            if (CurrentDialog) {
+                                if (data.Effect.Dialog === -99) {
+                                    DialogIndex++;
+                                    NextFrame = game.frame.Dialog;
+                                    yield getFrame();
+                                }
+                                if (CurrentDialog.Dialog.length > data.Effect.Dialog) {
+                                    DialogIndex = data.Effect.Dialog;
+                                    NextFrame = game.frame.Dialog;
+                                    yield getFrame();
+                                }
                             }
                         }
                         else if (data && data.Effect && data.Effect.hasOwnProperty('Encounter') && data.Effect.Encounter) {
@@ -1124,58 +1277,66 @@ var game;
 })(game || (game = {}));
 var game;
 (function (game) {
-    var core;
-    (function (core) {
-        core.BOSSKarma = 0;
-        core.IsFirstRun = true;
-        core.IsWake = false;
-        $(document).ready(function () {
-            game.changelog.init();
-            POST_Phase_0();
-        });
-        function POST_Phase_0() {
+    var post;
+    (function (post) {
+        function init() {
             return __awaiter(this, void 0, void 0, function* () {
                 game.togglePlayerMenuOptions();
                 game.display.clear();
                 game.control.clear();
-                AddEvents();
-                game.audio.init();
-                yield POST_Phase_1();
+                yield game.changelog.init();
+                yield Phase_0();
             });
         }
-        function POST_Phase_1() {
+        post.init = init;
+        function Phase_0() {
+            return __awaiter(this, void 0, void 0, function* () {
+                game.audio.init();
+                const state = game.storage.local.get('state');
+                const slotPopped = state === null || state === void 0 ? void 0 : state.Slots.filter(s => s.Name.hasValue());
+                if (slotPopped && slotPopped.length > 0)
+                    game.core.CanWake = true;
+                yield Phase_0_1();
+            });
+        }
+        function Phase_0_1() {
             return __awaiter(this, void 0, void 0, function* () {
                 const ctrls = [];
                 ctrls.push(new game.GameControl('Power on', 1, game.color.orangered));
-                ctrls.push(new game.GameControl('Wake', 2, game.color.orange));
+                if (game.core.CanWake)
+                    ctrls.push(new game.GameControl('Wake', 2, game.color.orange));
                 const gamecontrols = new game.GameControls(ctrls, function (event) {
                     return __awaiter(this, void 0, void 0, function* () {
                         if (!event)
                             return;
-                        const data = Number(event.data[0]);
-                        gamecontrols.clear();
-                        switch (data) {
-                            case 1: {
-                                yield game.pause(1000);
-                                yield game.display.speak('Time to wake up...', 1000);
-                                yield game.display.speak('My name is B.O.S.S. and I will be guiding you through your adventure... Like it or not... I am your BOSS...', 1000, true);
-                                yield POST_Phase_1_1();
-                                break;
-                            }
-                            case 2: {
-                                core.IsWake = true;
-                                yield game.pause(1000);
-                                yield game.display.speak('Time to wake up again...', 1000);
-                                yield POST_Phase_2();
-                                break;
-                            }
-                        }
+                        Phase_1(Number(event.data[0]));
                     });
                 });
                 gamecontrols.populate();
             });
         }
-        function POST_Phase_1_1() {
+        function Phase_1(choice) {
+            return __awaiter(this, void 0, void 0, function* () {
+                game.control.clear();
+                switch (choice) {
+                    case 1:
+                        Phase_1_1();
+                        break;
+                    case 2:
+                        Phase_1_2();
+                        break;
+                }
+            });
+        }
+        function Phase_1_1() {
+            return __awaiter(this, void 0, void 0, function* () {
+                yield game.pause(1000);
+                yield game.display.speak('Time to wake up...', 1000);
+                yield game.display.speak('My name is B.O.S.S. and I will be guiding you through your adventure... Like it or not... I am your BOSS...', 1000, true);
+                yield Phase_1_1_1();
+            });
+        }
+        function Phase_1_1_1() {
             return __awaiter(this, void 0, void 0, function* () {
                 const ctrls = [];
                 ctrls.push(new game.GameControl('What is a B.O.S.S.?', 1, game.color.green));
@@ -1189,41 +1350,54 @@ var game;
                         switch (control.attr('value')) {
                             case '1': {
                                 yield game.display.speak('All middle sliders for you isn\'t it...', 500, true, game.color.green);
-                                core.BOSSKarma++;
+                                game.core.BOSSKarma++;
                                 break;
                             }
                             case '2': {
                                 yield game.display.speak('You gotta watch your mouth around here or you\'ll get knocked down!', 500, true, game.color.red);
-                                core.BOSSKarma -= 2;
+                                game.core.BOSSKarma -= 2;
                                 break;
                             }
                             case '3': {
                                 yield game.display.speak('Hwhat? Hwhom? Hhow? I like your style, you can stay...', 500, true, game.color.lightblue);
-                                core.BOSSKarma += 2;
+                                game.core.BOSSKarma += 2;
                                 break;
                             }
                             case '4': {
                                 yield game.display.speak('You being short with me? you think you can do this better don\'t you...', 500, true, game.color.yellow);
-                                core.BOSSKarma--;
+                                game.core.BOSSKarma--;
                                 break;
                             }
                         }
                         yield game.display.speak('What is a "B.O.S.S." you ask?', 500, true);
                         yield game.display.speak('I am your Black Out Support System...', 500, true);
                         yield game.display.speak('Now... can we start having some fun please?', 2000, true);
-                        yield POST_Phase_2();
+                        yield Phase_2();
                     });
                 });
                 gamecontrols.populate();
             });
         }
-        function POST_Phase_2() {
+        function Phase_1_2() {
+            return __awaiter(this, void 0, void 0, function* () {
+                game.core.IsWake = true;
+                yield game.pause(1000);
+                yield game.display.speak('Time to wake up again...', 1000);
+                yield Phase_2();
+            });
+        }
+        function Phase_2() {
             return __awaiter(this, void 0, void 0, function* () {
                 yield game.display.speak('Starting system...', 2500);
                 yield game.display.speak('', 500, true);
+                yield Phase_2_1();
+            });
+        }
+        function Phase_2_1() {
+            return __awaiter(this, void 0, void 0, function* () {
                 yield game.audio.loadSounds();
                 yield game.audio.loadMusic();
-                if (!core.IsWake) {
+                if (!game.core.IsWake) {
                     yield game.display.longSpeak('Would you like some "tunes"?', game.color.yellow, false);
                     const ctrls = [];
                     ctrls.push(new game.GameControl('Hell yeah! I want WAR TRUMPETS!', 1, game.color.mediumpurple));
@@ -1234,10 +1408,13 @@ var game;
                             gamecontrols.clear();
                             switch (control.attr('value')) {
                                 case '1': {
-                                    yield game.display.speak('Playing the good stuff...', 3000, false, game.color.mediumpurple);
+                                    yield game.display.speak('Playing the good stuff...', 1000, false, game.color.mediumpurple);
+                                    game.audio.music.Volume.setValue(1);
+                                    game.audio.music.playSong();
+                                    yield game.pause(1500);
                                     yield game.display.speak('This is my favourite...', 2000, true, game.color.lightblue);
                                     yield game.display.speak('We are going to be good friends you and I...', 2000, true, game.color.green);
-                                    core.BOSSKarma++;
+                                    game.core.BOSSKarma++;
                                     break;
                                 }
                                 case '2': {
@@ -1246,20 +1423,24 @@ var game;
                                     yield game.display.speak('Let us just get on with it...', 2000, true, game.color.orange);
                                     yield game.display.speak('Fucker...', 1000, false, game.color.yellow);
                                     yield game.display.speak('Continuing...', 1000, false);
-                                    core.BOSSKarma--;
+                                    game.core.BOSSKarma--;
                                     break;
                                 }
                             }
-                            yield POST_Phase_3();
+                            yield Phase_3();
                         });
                     });
                     gamecontrols.populate();
                 }
                 else
-                    yield POST_Phase_3();
+                    yield Phase_3();
             });
         }
-        function POST_Phase_3() {
+        function Phase_2_2() {
+            return __awaiter(this, void 0, void 0, function* () {
+            });
+        }
+        function Phase_3() {
             return __awaiter(this, void 0, void 0, function* () {
                 yield game.display.speak('Unlocking player controls...', 1000);
                 game.togglePlayerMenuOptions();
@@ -1267,15 +1448,36 @@ var game;
                 yield game.display.speak('Stating the obvious...', 1000, true);
                 yield game.pause(1000);
                 yield game.display.speak('Welcome player...', 3000);
+                if (!game.audio.music.isPlaying()) {
+                    game.audio.music.Volume.setValue(1);
+                    game.audio.music.playSong();
+                }
                 game.loop.init();
-                addMenuControls();
+                game.core.addMenuControls();
             });
         }
-        const screen = $('.story');
-        const constrols = $('.controls');
+    })(post = game.post || (game.post = {}));
+})(game || (game = {}));
+var game;
+(function (game) {
+    var core;
+    (function (core) {
+        core.BOSSKarma = 0;
+        core.IsFirstRun = true;
+        core.IsWake = false;
+        core.CanWake = false;
         core._screenState = '';
         core._controlState = '';
-        function AddEvents() {
+        core.Version = '';
+        const screen = $('.story');
+        const constrols = $('.controls');
+        $(function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                yield game.post.init();
+                addEvents();
+            });
+        });
+        function addEvents() {
             $(document).on('click', '#continue', function () {
                 game.control.clear();
                 game.display.continueSpeak();
@@ -1283,6 +1485,43 @@ var game;
             $(document).on('click', 'clicker[title="Menu"]', function () {
                 const menu = $(this);
                 toggleMenu(menu);
+            });
+            $('switch').on('click', function () {
+                var _a;
+                const switchBtn = $(this);
+                const sound = game.audio.sounds.get(`click-on`);
+                sound.volume = game.audio.music.Volume.getValue() + 0.2;
+                sound.play();
+                switch (switchBtn.attr('value')) {
+                    case 'play': {
+                        switchBtn.removeClass('active');
+                        switchBtn.addClass('active');
+                        $('switch[value="pause"]').removeClass('active');
+                        if (!game.audio.music.isPlaying())
+                            game.audio.music.CurrentTrack.play();
+                        break;
+                    }
+                    case 'pause': {
+                        switchBtn.removeClass('active');
+                        switchBtn.addClass('active');
+                        $('switch[value="play"]').removeClass('active');
+                        if (game.audio.music.isPlaying())
+                            game.audio.music.CurrentTrack.pause();
+                        break;
+                    }
+                    case 'skip': {
+                        game.audio.music.skip();
+                        break;
+                    }
+                    case 'shuffle': {
+                        switchBtn.toggleClass('active');
+                        if ((_a = switchBtn.attr('class')) === null || _a === void 0 ? void 0 : _a.contains('active'))
+                            game.audio.music.IsRandom = true;
+                        else
+                            game.audio.music.IsRandom = false;
+                        break;
+                    }
+                }
             });
         }
         function toggleMenu(menu) {
@@ -1318,10 +1557,10 @@ var game;
             ctrls.push(new game.GameControl('Exit', 4, game.color.orangered));
             const gamecontrols = new game.GameControls(ctrls, function (event) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    const control = $(event.currentTarget);
+                    const control = event.data[0];
                     gamecontrols.clear();
-                    switch (control.attr('value')) {
-                        case '1': {
+                    switch (control) {
+                        case 1: {
                             if (!isRunning || core.IsFirstRun)
                                 game.loop.create();
                             else {
@@ -1331,15 +1570,15 @@ var game;
                             }
                             break;
                         }
-                        case '2': {
+                        case 2: {
                             game.loop.save();
                             break;
                         }
-                        case '3': {
+                        case 3: {
                             game.loop.load();
                             break;
                         }
-                        case '4': {
+                        case 4: {
                             yield game.loop.exit();
                             break;
                         }
@@ -1348,6 +1587,7 @@ var game;
             });
             gamecontrols.populate();
         }
+        core.addMenuControls = addMenuControls;
     })(core = game.core || (game.core = {}));
 })(game || (game = {}));
 var game;
@@ -1404,7 +1644,6 @@ var game;
     (function (storage) {
         var local;
         (function (local) {
-            local.version = $('#gameversion').text();
             function set(key, value) {
                 localStorage.setItem(getKey(key), JSON.stringify(value));
             }
@@ -1421,8 +1660,7 @@ var game;
             }
             local.del = del;
             function getKey(key) {
-                const version = $('#gameversion').text();
-                return `${version.replace('.', '_')}-${key}`;
+                return `${game.core.Version.replaceAll('.', '_')}-${key}`;
             }
         })(local = storage.local || (storage.local = {}));
     })(storage = game.storage || (game.storage = {}));
@@ -1438,7 +1676,7 @@ var game;
         state_1.init = init;
         function saveState() {
             var _a;
-            const state = game.storage.local.get('state');
+            const state = state_1.Current ? state_1.Current : game.storage.local.get('state');
             const newState = [];
             for (let index = 1; index <= 3; index++) {
                 let slot = (_a = state === null || state === void 0 ? void 0 : state.Slots.filter(s => s.Id == index)[0]) !== null && _a !== void 0 ? _a : new game.SaveSlot(index);
@@ -1488,5 +1726,14 @@ var game;
         }
     }
     game.SaveSlot = SaveSlot;
+    class History {
+        constructor() {
+            this.Drunkness = 100;
+            this.Fullness = 0;
+            this.Charge = 0;
+            this.Frame = [];
+        }
+    }
+    game.History = History;
 })(game || (game = {}));
 //# sourceMappingURL=game.js.map

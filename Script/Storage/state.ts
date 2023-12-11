@@ -7,7 +7,7 @@ namespace game.state {
     }
 
     export function saveState() {
-        const state = storage.local.get<GameState>('state');
+        const state = Current ? Current : storage.local.get<GameState>('state');
 
         const newState: Array<SaveSlot> = [];
         for (let index = 1; index <= 3; index++) {
@@ -61,5 +61,17 @@ namespace game {
         constructor(id: number) {
             this.Id = id
         }
+    }
+
+    export class History {
+        Drunkness: number = 100;
+        Fullness: number = 0;
+        Charge: number = 0; 
+        Frame: Array<FrameState> = [];
+    }
+
+    export interface FrameState {
+        Id: number;
+        Type: frame;
     }
 }

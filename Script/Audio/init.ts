@@ -16,6 +16,9 @@ namespace game.audio {
 
         SmallTalk = (await utils.jsonfile.getData(SmallTalkPath)) as SmallTalk;
         RandomizedIndex = utils.number.getRandomIndex(SmallTalk.Lines.length);
+
+        const volumeKnob = $('knob img');
+        audio.music.Volume = new Knob(volumeKnob, -151, 147);
     }
 
     export async function loadSounds() {
@@ -51,6 +54,9 @@ namespace game.audio {
             await display.speak(smallTalk(), 500, true);
             await display.speak('', 500, true);
         }
+
+        $('knob').removeAttr('disabled');
+        $('switch').removeAttr('disabled');
 
         await display.speak('Music files initializing...', 1000, true);
 

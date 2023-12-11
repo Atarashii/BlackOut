@@ -333,6 +333,35 @@
                     "description": "i'm sorry... it even looks like crap on smaller screens... GET BETTER SCREENS YOU PEASANTS!"
                 }
             ]
+        },
+        {
+            "version_m": 0,
+            "version_s": 4,
+            "version_c": 121,
+            "changes_m": [
+                {
+                    "title": "TUNES!",
+                    "description": "Finally, the war trumpets can play... and pause, and skip... and even SHUFFLE!",
+                    "impact": "Atmosphere baby"
+                }
+            ],
+            "changes_s": [
+                {
+                    "title": "Volume knob",
+                    "description": "Hover and scroll, easy as that. the problem is i don't think this'll work on mobile. might have to make it a slider for the mobi-peasants.",
+                    "impact": "ONLY for music. The other ambiant sounds are supposed to be there. You have volume controls on your device... use them"
+                },
+                {
+                    "title": "Amp controls",
+                    "description": "5 songs so far, shuffle them, play them, skip them, pause them... the world is your musical oyster."
+                }
+            ],
+            "changes_c": [
+                {
+                    "title": "Various bug fixes",
+                    "description": "I refactor things and make mistakes. Then i find those mistakes. Then i fix SOME of those mistakes."
+                }
+            ]
         }
     ]
 }

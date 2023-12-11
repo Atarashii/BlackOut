@@ -2,5 +2,8 @@
   "devDependencies": {
     "@types/jquery": "^3.5.27",
     "@types/node": "^20.9.1"
+  },
+  "dependencies": {
+    "twitch": "^4.6.7"
   }
 }

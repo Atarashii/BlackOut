@@ -425,6 +425,7 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 10px 0px;
+  gap: 15px;
 }
 .scene > .center {
   display: inline-flex;
@@ -440,13 +441,14 @@ body {
   margin: 10px 0px;
   padding: 15px;
 }
-.scene .avatar {
+.scene avatar {
   width: calc(100% - 20px);
   aspect-ratio: 1/1;
   background-color: black;
   display: flex;
-  align-items: end;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
   border: 2px solid var(--border-color);
   border-radius: 15px;
 }
@@ -455,6 +457,101 @@ body {
   flex-direction: column;
   justify-content: end;
   align-items: start;
+}
+.scene BOSSAmp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 20px);
+  background-color: black;
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+}
+.scene BOSSAmp * {
+  margin: 5px;
+}
+.scene BOSSAmp > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.scene BOSSAmp > div span {
+  font-size: 12px;
+  margin: 0px;
+}
+.scene BOSSampControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 20px);
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  gap: 15px;
+  background-color: color-mix(in srgb, black 50%, transparent 50%);
+}
+.scene BOSSampControls > div {
+  margin: 5px;
+}
+.scene BOSSampControls > div span i {
+  margin: 0px;
+}
+.scene BOSSampControls knob {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--border-color);
+}
+.scene BOSSampControls knob img {
+  aspect-ratio: 1/1;
+  width: 70%;
+  /*MIN -151 <-> MAX 147*/
+  transform: rotate(-151deg);
+  transition: transform 200ms ease-in-out;
+  cursor: ns-resize;
+}
+.scene BOSSampControls .amp-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin-bottom: 5px;
+}
+.scene BOSSampControls .amp-controls switch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  aspect-ratio: 1/1;
+  font-size: 12px;
+  border-radius: 10px;
+  opacity: 0.5;
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+}
+.scene BOSSampControls .amp-controls switch i {
+  opacity: 1;
+}
+.scene BOSSampControls .amp-controls switch.active {
+  opacity: 1;
+}
+.scene BOSSampControls .amp-controls switch:nth-child(1) {
+  background: url("../../Assets/Images/Components/switch1.png");
+}
+.scene BOSSampControls .amp-controls switch:nth-child(2) {
+  background: url("../../Assets/Images/Components/switch2.png");
+}
+.scene BOSSampControls .amp-controls switch:nth-child(3) {
+  background: url("../../Assets/Images/Components/switch3.png");
+}
+.scene BOSSampControls .amp-controls switch:nth-child(4) {
+  background: url("../../Assets/Images/Components/switch4.png");
 }
 
 .action {

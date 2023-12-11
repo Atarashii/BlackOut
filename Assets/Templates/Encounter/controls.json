@@ -1,6 +1,17 @@
 {
     "Controls": [
         {
+            "Id": -99,
+            "Text": "Continue...",
+            "TriggerId": "",
+            "Color": "",
+            "Effect": {
+                "Encounter": -99,
+                "Dialog": -99
+            }
+        },
+
+        {
             "Id": -1,
             "Text": "",
             "TriggerId": "",
@@ -10,13 +21,14 @@
                 "Dialog": -1
             }
         },
+
         {
             "Id": 0,
             "Text": "Go to dialog 1",
             "TriggerId": "yes",
             "Color": "green",
             "Effect": {
-                "Dialog": 1
+                "Dialog": 0
             }
         },
         {

@@ -132,7 +132,7 @@ namespace game.loop {
 
             let data: Interaction = Controls.filter((o, i, a) => o.Id === Number(control.attr('value')))[0];
 
-            if (data && data.Effect && data.Effect.hasOwnProperty('Dialog') && data.Effect.Dialog) {
+            if (data && data.Effect && data.Effect.hasOwnProperty('Dialog') && typeof data.Effect.Dialog === 'number') {
                 if (CurrentDialog && CurrentDialog.Dialog.length > data.Effect.Dialog) {
                     DialogIndex = data.Effect.Dialog!;
                     NextFrame = frame.Dialog;
@@ -192,11 +192,19 @@ namespace game.loop {
             let data: Interaction = Controls.filter((o, i, a) => o.Id === Number(control.attr('value')))[0];
 
             if (data && data.Effect && data.Effect.hasOwnProperty('Dialog') && data.Effect.Dialog) {
-                if (CurrentDialog && CurrentDialog.Dialog.length > data.Effect.Dialog) {
-                    DialogIndex = data.Effect.Dialog!;
-                    NextFrame = frame.Dialog;
-
-                    await getFrame();
+                if (CurrentDialog) {
+                    if (data.Effect.Dialog === -99) {
+                        DialogIndex++;
+                        NextFrame = frame.Dialog;
+    
+                        await getFrame();
+                    }
+                    if (CurrentDialog.Dialog.length > data.Effect.Dialog) {
+                        DialogIndex = data.Effect.Dialog;
+                        NextFrame = frame.Dialog;
+    
+                        await getFrame();
+                    }
                 }
             } else if (data && data.Effect && data.Effect.hasOwnProperty('Encounter') && data.Effect.Encounter) {
                 if (Encounters.filter((o, i, a) => data.Effect && o.Id === data.Effect.Encounter).length > 0) {

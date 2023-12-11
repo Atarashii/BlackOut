@@ -29,9 +29,11 @@
         <div class="main-container">
             <div class="scene">
                 <div class="left">
-                    <div class="avatar left crt">
-                        Monitor 1
-                    </div>
+                    <avatar class="crt">
+                        <div class="avatar left">
+                        </div>
+                        <span id="avatar_right_name">Monitor 1</span>
+                    </avatar>
                 </div>
                 <div class="center crt">
                     <!-- <div class="graphic">
@@ -41,9 +43,24 @@
                     </div>
                 </div>
                 <div class="right">
-                    <div class="avatar right crt">
-                        Monitor 2
-                    </div>
+                    <avatar>
+                        <div class="avatar right crt">
+                        </div>
+                        <span id="avatar_right_name" class="crt">Monitor 2</span>
+                    </avatar>
+                    <BOSSAmp class="crt">
+                        <marquee scrolldelay="250">.............</marquee>
+                        <div><span id="track_time">00:00</span><span>|</span><span id="track_total">00:00</span></div>
+                    </BOSSAmp>
+                    <BOSSampControls>
+                        <knob disabled="disabled"><i class="fa-solid fa-caret-down"></i> <img src="./Assets/Images/Components/knob_vol.png"/></knob>
+                        <div class="amp-controls">
+                            <switch value="play" disabled="disabled"><i class="fa-solid fa-play"></i></switch>
+                            <switch value="pause" disabled="disabled"><i class="fa-solid fa-pause"></i></switch>
+                            <switch value="skip" disabled="disabled"><i class="fa-solid fa-forward"></i></switch>
+                            <switch value="shuffle" disabled="disabled"><i class="fa-solid fa-shuffle"></i></switch>
+                        </div>
+                    </BOSSampControls>
                 </div>
             </div>
             <div class="action">

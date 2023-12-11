@@ -46,6 +46,7 @@
         "Script/Game/loop.ts",
         "Script/Game/player.ts",
         "Script/Game/slot.ts",
+        "Script/Game/post.ts",
 
         // Core
         "Script/core.ts",

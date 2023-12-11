@@ -1,6 +1,4 @@
 namespace game.storage.local {
-    export const version = $('#gameversion').text();
-    
     export function set(key: string, value: any) {
         localStorage.setItem(getKey(key), JSON.stringify(value));
     }
@@ -18,7 +16,6 @@ namespace game.storage.local {
     }
 
     function getKey(key: string): string {
-        const version = $('#gameversion').text();
-        return `${version.replace('.', '_')}-${key}`;
+        return `${core.Version.replaceAll('.', '_')}-${key}`;
     }
 }

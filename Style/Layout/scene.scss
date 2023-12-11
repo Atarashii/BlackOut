@@ -15,6 +15,7 @@
     flex-direction: column;
     align-items: center;
     padding: 10px 0px;
+    gap: 15px;
   }
 
   &>.center {
@@ -32,13 +33,14 @@
     padding: 15px;
   }
 
-  .avatar {
+  avatar {
     width: calc(100% - 20px);
     aspect-ratio: 1 / 1;
     background-color: black;
     display: flex;
-    align-items: end;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
     border: 2px solid var(--border-color);
     border-radius: 15px;
   }
@@ -48,5 +50,115 @@
     flex-direction: column;
     justify-content: end;
     align-items: start;
+  }
+
+  BOSSAmp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 20px);
+    background-color: black;
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+
+    & * {
+      margin: 5px;
+    }
+
+    &>div {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 12px;
+        margin: 0px;
+      }
+    }
+  }
+
+  BOSSampControls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 20px);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    gap: 15px;
+    background-color: color-mix(in srgb, black 50%, transparent 50%);
+
+    &>div {
+      margin: 5px;
+      span {
+        i {
+          margin: 0px;
+        }
+      }
+    }
+
+    knob {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--border-color);
+
+      img {
+        aspect-ratio: 1/1;
+        width: 70%;
+        /*MIN -151 <-> MAX 147*/
+        transform: rotate(-151deg);
+        transition: transform 200ms ease-in-out;
+        cursor: ns-resize;
+      }
+    }
+
+    .amp-controls {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 90%;
+      margin-bottom: 5px;
+
+      switch {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 20%;
+        aspect-ratio: 1/1;
+        font-size: 12px;
+        border-radius: 10px;
+        opacity: 0.5;
+        color: white;
+        border: 2px solid white;
+        cursor: pointer;
+
+        i {
+          opacity: 1;
+        }
+
+        &.active {
+          opacity: 1;
+        }
+      }
+
+      switch:nth-child(1) {
+        background: url("../../Assets/Images/Components/switch1.png");
+      }
+      switch:nth-child(2) {
+        background: url("../../Assets/Images/Components/switch2.png");
+      }
+      switch:nth-child(3) {
+        background: url("../../Assets/Images/Components/switch3.png");
+      }
+      switch:nth-child(4) {
+        background: url("../../Assets/Images/Components/switch4.png");
+      }
+    }
   }
 }

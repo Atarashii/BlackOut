@@ -8,7 +8,9 @@ namespace game.changelog {
         const updates = result.updates.reverse() as Array<Update>;
         const latest = updates[0];
 
-        $('#gameversion').text(`v ${latest.version_m}.${latest.version_s}.${latest.version_c}`);
+        const version = `v ${latest.version_m}.${latest.version_s}.${latest.version_c}`;
+        $('#gameversion').text(version);
+        core.Version = version;
 
         updates.forEach(update => {
             if (update.version_m === 0 && update.version_s === 0 && update.version_c === 0)

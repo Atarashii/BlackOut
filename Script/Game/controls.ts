@@ -66,4 +66,71 @@ namespace game {
             await this.Handler(event);
         }
     }
+
+    export class Knob {
+        Element: JQuery<HTMLElement>;
+        MinDegrees: number;
+        MaxDegrees: number;
+        Value: number;
+
+        constructor(knob: JQuery<HTMLElement>, min: number, max: number, val: number = 0) {
+            this.Element = knob;
+            this.MinDegrees = min;
+            this.MaxDegrees = max;
+            this.Value = val;
+
+            const volKnob = this.Element;
+            volKnob.on('mouseover mouseout', function(event: Event) {
+                event.preventDefault();
+
+                if (event.type === 'mouseover') {
+                    volKnob.on('wheel', handleWheel);
+                } else {
+                    volKnob.off('wheel', handleWheel);
+                }
+            });
+        }
+
+        getValue(): number {
+            return this.Value / 100;
+        }
+
+        setValue(val: number) {
+            setVolKnob(val*2);
+            
+            const sound = audio.sounds.get(`tick`);
+            sound.volume = audio.music.Volume.getValue() + 0.2;
+            sound.play();
+
+            if (audio.music.CurrentTrack)
+                audio.music.CurrentTrack.volume = audio.music.Volume.getValue();
+        }
+    }
+
+    function handleWheel(event: any) {
+        const wheelevent = (event as WheelEvent);
+        const wheel = (wheelevent as any).originalEvent;
+        const deltaY = wheel.deltaY;
+
+        const sound = audio.sounds.get(`tick`);
+        sound.volume = audio.music.Volume.getValue() + 0.2;
+
+        if (deltaY > 0) {
+            if (audio.music.Volume.Value > 0)
+                audio.music.Volume.setValue((audio.music.Volume.Value/2) - 1);
+                sound.play();
+        } else {
+            if (audio.music.Volume.Value < 20)
+                audio.music.Volume.setValue((audio.music.Volume.Value/2) + 1);
+                sound.play();
+        }
+    }
+
+    function setVolKnob(val: number) {
+        const range = audio.music.Volume.MaxDegrees - audio.music.Volume.MinDegrees;
+        audio.music.Volume.Value = val;
+        const degrees = audio.music.Volume.MinDegrees + Math.trunc(range * val/20);
+
+        audio.music.Volume.Element.css('transform', `rotate(${degrees}deg)`);
+    }
 }
