@@ -1,0 +1,28 @@
+<head>
+    <title>Blackout Changelog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./Assets/Images/Icon/favicon.ico">
+
+    <link rel="stylesheet" href="Style/Transpiled/changelog.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="./Script/Vendor/topcheck.js"></script>
+</head>
+
+<body>
+    <div class="changes-log">
+        <h2 title="Keep up with my progress in this bit.">Changelog<span id="gameversion"></span></h2>
+        <div class="changelog" id="log">
+            <update>
+                <!-- injected by script -->
+            </update>
+        </div>
+    </div>
+
+    <script>
+        $(async function() {
+            await window.top.game.changelog.init($('.changelog#log'));
+        });
+    </script>
+</body>

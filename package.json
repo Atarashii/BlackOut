@@ -1,9 +1,19 @@
 {
   "devDependencies": {
-    "@types/jquery": "^3.5.27",
-    "@types/node": "^20.9.1"
+    "@types/jquery": "^3.5.29",
+    "@types/node": "^20.12.2",
+    "autoprefixer": "^10.4.19",
+    "gulp": "^5.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-postcss": "^10.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0"
   },
   "dependencies": {
-    "twitch": "^4.6.7"
+    "@types/intl": "^1.2.2",
+    "es2020": "^1.1.9",
+    "intl": "^1.2.5",
+    "sass": "^1.72.0",
+    "typescript": "^5.4.3"
   }
 }

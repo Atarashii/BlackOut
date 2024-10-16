@@ -1,0 +1,107 @@
+<head>
+    <title>Blackout Game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./Assets/Images/Icon/favicon.ico">
+
+    <link rel="stylesheet" href="Style/Transpiled/game.css">
+    <script src="https://kit.fontawesome.com/1b9ac83b3b.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- <script src="Script/Compiled/game.js"></script> -->
+    <script src="./Script/Vendor/topcheck.js"></script>
+    
+    <script src="Script/Compiled/bundle.js"></script>
+    <script>
+        $(async function () {
+            await window.game.core.init();
+        });
+    </script>
+</head>
+
+<body id="game-body">
+    <div class="main-container">
+        <div class="scene hide">
+            <div class="left">
+                <avatar class="crt">
+                    <div class="avatar left">
+                    </div>
+                    <span id="avatar_right_name">Monitor 1</span>
+                </avatar>
+            </div>
+            <div class="center crt">
+                <!-- <div class="graphic">
+                    picture
+                </div> -->
+                <div class="story topleft">
+                </div>
+            </div>
+            <div class="right">
+                <avatar>
+                    <div class="avatar right crt">
+                    </div>
+                    <span id="avatar_right_name" class="crt">Monitor 2</span>
+                </avatar>
+                <BOSSAmp class="crt">
+                    <marquee scrolldelay="250">.............</marquee>
+                    <div><span id="track_time">00:00</span><span>|</span><span id="track_total">00:00</span></div>
+                </BOSSAmp>
+                <BOSSampControls>
+                    <knob disabled="disabled"><i class="fa-solid fa-caret-down"></i> <img src="./Assets/Images/Components/knob_vol.png"/></knob>
+                    <div class="amp-controls">
+                        <switch value="play" disabled="disabled"><i class="fa-solid fa-play"></i></switch>
+                        <switch value="pause" disabled="disabled"><i class="fa-solid fa-pause"></i></switch>
+                        <switch value="skip" disabled="disabled"><i class="fa-solid fa-forward"></i></switch>
+                        <switch value="shuffle" disabled="disabled"><i class="fa-solid fa-shuffle"></i></switch>
+                    </div>
+                </BOSSampControls>
+            </div>
+        </div>
+        <div class="action hide">
+            <div class="left">
+                <div class="controls crt">
+                </div>
+            </div>
+            <div class="right">
+                <div class="stats crt">
+                    <stat title="Booze">
+                        <icon><i class="fa-solid fa-wine-bottle"></i></icon>
+                        <bar></bar>
+                    </stat>
+                    <stat title="Food">
+                        <icon><i class="fa-solid fa-drumstick-bite"></i></icon>
+                        <bar></bar>
+                    </stat>
+                    <stat title="Cell Charge">
+                        <icon><i class="fa-solid fa-bolt"></i></icon>
+                        <bar></bar>
+                    </stat>
+                </div>
+                <div class="menu crt">
+                    <div class="row">
+                        <clicker title="Menu">
+                            <icon><i class="fa fa-wrench" aria-hidden="true"></i></icon>
+                        </clicker>
+                        <clicker title="Character">
+                            <icon><i class="fa fa-user" aria-hidden="true"></i></icon>
+                        </clicker>
+                        <clicker title="Pockets">
+                            <icon><i class="fa fa-suitcase" aria-hidden="true"></i></icon>
+                        </clicker>
+                    </div>
+                    <div class="row">
+                        <clicker title="Inspect">
+                            <icon><i class="fa fa-search" aria-hidden="true"></i></icon>
+                        </clicker>
+                        <clicker title="Listen">
+                            <icon><i class="fa fa-deaf" aria-hidden="true"></i></icon>
+                        </clicker>
+                        <clicker title="Touch">
+                            <icon><i class="fa fa-hand-paper-o" aria-hidden="true"></i></icon>
+                        </clicker>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

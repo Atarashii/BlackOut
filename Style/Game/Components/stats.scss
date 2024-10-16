@@ -1,0 +1,65 @@
+stat {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    font-size: 12px;
+    margin: 2.5px 0px;
+
+    icon {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        width: 20px;
+        background-color: black;
+        border-radius: 50%;
+    }
+
+    bar {
+        height: 6px;
+        width: calc(100% - 20px);
+        border-radius: 0px 3px 3px 0px;
+    }
+
+    &:nth-child(1) bar {
+        background: linear-gradient(to right, var(--booze) 50%, black 51%);
+        border: 1px solid var(--booze);
+    }
+
+    &:nth-child(1) icon {
+        border: 2px solid var(--booze);
+
+        i {
+            color: var(--booze);
+        }
+    }
+
+    &:nth-child(2) bar {
+        background: linear-gradient(to right, var(--food) 100%, black 101%);
+        border: 1px solid var(--food);
+    }
+
+    &:nth-child(2) icon {
+        border: 2px solid var(--food);
+
+        i {
+            color: var(--food);
+        }
+    }
+
+    &:nth-child(3) bar {
+        background: linear-gradient(to right, var(--charge) 5%, black 6%);
+        border: 1px solid var(--charge);
+    }
+
+    &:nth-child(3) icon {
+        border: 2px solid var(--charge);
+
+        i {
+            color: var(--charge);
+        }
+    }
+}

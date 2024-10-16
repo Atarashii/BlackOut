@@ -5,57 +5,22 @@
         "noEmitOnError": true,
         "removeComments": true,
         "allowUnreachableCode": false,
-        "target": "es6",
+        "target": "ES2020",
         "strict": true,
         "module": "system",
-        "outFile": "Script/Compiled/game.js",
         "allowJs": true,
         "sourceMap": true,
         "skipLibCheck": true,
+        "composite": true,
+        "tsBuildInfoFile": null,
+        "outFile": "./Script/Compiled/bundle.js",
         "typeRoots": [
             "node_modules/@types"
         ]
     },
     "exclude": [
-        "node_modules"
-    ],
-    "files": [
-        // Utils && Structures
-        "Script/Structures/classes.ts",
-        "Script/Utils/effects.ts",
-        "Script/Utils/elementBuilder.ts",
-        "Script/Utils/extensions.ts",
-        "Script/Utils/jsonFile.ts",
-        "Script/Utils/numbers.ts",
-        "Script/Utils/utils.ts",
-
-        // Audio
-        "Script/Audio/init.ts",
-        "Script/Audio/music.ts",
-        "Script/Audio/sounds.ts",
-
-        // Changelog
-        "Script/Changelog/core.ts",
-
-        // Display
-        "Script/Display/core.ts",
-        "Script/Display/lines.ts",
-        
-        // Game
-        "Script/Game/controls.ts",
-        "Script/Game/loop.ts",
-        "Script/Game/player.ts",
-        "Script/Game/slot.ts",
-        "Script/Game/post.ts",
-
-        // Core
-        "Script/core.ts",
-        "Script/enums.ts",
-        "Script/globals.ts",
-
-        // Storage
-        "Script/Storage/local.ts",
-        "Script/Storage/state.ts"
-
+        "node_modules",
+        "./Script/Compiled/*",
+        "./**/*.js"
     ]
 }

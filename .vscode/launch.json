@@ -5,13 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "1. Launch Site",
             "type": "chrome",
             "request": "launch",
-            "name": "Open index.html",
             "file": "${workspaceFolder}/index.html",
             "runtimeArgs": [
                 "--disable-web-security"
             ]
+        },
+        {
+            "name": "2. Create Release",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/release.ps1",
+            "cwd": "${cwd}"
         }
     ]
 }

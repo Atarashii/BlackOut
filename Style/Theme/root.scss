@@ -1,0 +1,46 @@
+@font-face {
+    font-family: DosMode;
+    src: url("../../Assets/Fonts/MorePerfectDOSVGA.ttf");
+}
+
+:root {
+    --border-color: darkkhaki;
+    --booze: cyan;
+    --food: pink;
+    --charge: yellow;
+    --border_colour: #333;
+    --accent-color: green;
+
+    font-family: DosMode;
+    font-weight: 500;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--accent-color) 50%, transparent 100%);
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 90%, transparent 100%);
+}
+
+// Global variables
+$mobile-max-width: 1024px; // Define the variable for maximum width
+
+// Other shared styles
+@import "./interaction.scss";
+@import "./effects.scss";
+@import "./rootlayout.scss";
